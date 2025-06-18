@@ -61,7 +61,7 @@ class MoviesController extends AppController
         return null;
     }
 
-    public function delete(?string $id = null): Response
+    public function delete(?string $id = null): Response|null
     {
         $this->request->allowMethod(['post', 'delete']);
         $movie = $this->Movies->get($id);
