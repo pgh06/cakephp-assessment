@@ -23,6 +23,8 @@ class ActorsControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Actors',
+        'app.Movies',
+        'app.ActorsMovies',
     ];
 
     /**
