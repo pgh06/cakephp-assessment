@@ -21,12 +21,10 @@ class ActorsController extends AppController
         return null;
     }
 
-    public function view(?string $id = null): Response|null
+    public function view(?string $id = null): void
     {
         $actor = $this->Actors->get($id, contain: []);
         $this->set(compact('actor'));
-
-        return null;
     }
 
     public function add(): Response|null
