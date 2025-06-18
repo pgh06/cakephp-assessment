@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\BaseMigration;
+use Phinx\Migration\AbstractMigration;
 
-class CreateMovies extends BaseMigration
+class CreateMovies extends AbstractMigration
 {
     /**
      * Change Method.

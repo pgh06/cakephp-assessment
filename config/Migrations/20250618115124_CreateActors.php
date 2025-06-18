@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\BaseMigration;
 
-class CreateActors extends BaseMigration
+use Phinx\Migration\AbstractMigration;
+
+class CreateActors extends AbstractMigration
 {
     /**
      * Change Method.
