@@ -91,4 +91,8 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
+    'TMDB' => [
+        'url' => 'https://api.themoviedb.org/3/search/person',
+        'api_key' => env('TMDB_API_KEY', ''),
+    ],
 ];

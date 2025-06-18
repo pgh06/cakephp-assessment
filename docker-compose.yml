@@ -25,3 +25,5 @@ services:
 
 volumes:
   db_data:
+environment:
+  TMDB_API_KEY=459a3515de1336840d98a6bde9fd25e7
