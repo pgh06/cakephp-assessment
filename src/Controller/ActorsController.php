@@ -6,12 +6,8 @@ namespace App\Controller;
 use Cake\Http\Response;
 
 /**
- * Controller for managing Actors.
- *
- * Provides actions to list, view, add, edit, delete, and search actors.
- * 
- * @property ActorsTable $Actors The Actors table instance
- *
+ * @property \App\Model\Table\ActorsTable $Actors
+ * @property \App\Model\Table\MoviesTable $Movies
  */
 class ActorsController extends AppController
 {
