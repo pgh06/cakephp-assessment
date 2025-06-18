@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Http\Response;
-use Fig\Http\Message\StatusCodeInterface;
 use App\Model\Table\MoviesTable;
 
 /**
@@ -12,24 +11,23 @@ use App\Model\Table\MoviesTable;
  */
 class MoviesController extends AppController
 {
-    public function index(): Response|null
+    // Only renders a view, never redirects: return void
+    public function index(): void
     {
         $query = $this->Movies->find();
         $movies = $this->paginate($query);
         $this->set(compact('movies'));
-
-        return null;
     }
 
-    public function view(?string $id = null): Response|null
+    // Only renders a view, never redirects: return void
+    public function view(string $id): void
     {
         $movie = $this->Movies->get($id, contain: []);
         $this->set(compact('movie'));
-
-        return null;
     }
 
-    public function add(): Response|null
+    // May redirect, so return Response and always return a Response object
+    public function add(): Response
     {
         $movie = $this->Movies->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -42,10 +40,11 @@ class MoviesController extends AppController
         }
 
         $this->set(compact('movie'));
-        return null;
+        return $this->getResponse();
     }
 
-    public function edit(?string $id = null): Response|null
+    // May redirect, so return Response and always return a Response object
+    public function edit(string $id): Response
     {
         $movie = $this->Movies->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -58,10 +57,11 @@ class MoviesController extends AppController
         }
 
         $this->set(compact('movie'));
-        return null;
+        return $this->getResponse();
     }
 
-    public function delete(?string $id = null): Response|null
+    // May redirect, so return Response and always return a Response object
+    public function delete(string $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $movie = $this->Movies->get($id);
