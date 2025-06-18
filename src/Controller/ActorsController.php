@@ -47,10 +47,12 @@ class ActorsController extends AppController
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
+
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
+
         $this->set(compact('actor'));
         return $this->render();
     }
@@ -66,10 +68,12 @@ class ActorsController extends AppController
         $actor = $this->Actors->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
+
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
+            
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
         $this->set(compact('actor'));

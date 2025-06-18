@@ -6,12 +6,9 @@ namespace App\Controller;
 use App\Model\Table\MoviesTable;
 use Cake\Http\Response;
 
+
 /**
- * Controller for managing Movies.
- *
- * Provides actions to list, view, add, edit, and delete movie records.
- *
- * @property MoviesTable $Movies The Movies table instance
+ * @property \App\Model\Table\MoviesTable $Movies
  */
 class MoviesController extends AppController
 {
