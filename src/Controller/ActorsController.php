@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Http\Response;
-
+use \Cake\Http\Client;
+use \Cake\Core\Configure;
+use \Exception;
 /**
  * @property \App\Model\Table\ActorsTable $Actors
  * @property \App\Model\Table\MoviesTable $Movies
@@ -66,6 +68,7 @@ class ActorsController extends AppController
     public function edit(string $id): Response
     {
         $actor = $this->Actors->get($id, contain: []);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
 
@@ -76,8 +79,10 @@ class ActorsController extends AppController
             
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
+
         $this->set(compact('actor'));
         $this->response = $this->response->withType('json');
+
         return $this->render();
     }
 
@@ -131,7 +136,7 @@ class ActorsController extends AppController
 
         if (!empty($searchTerm)) {
             try {
-                $http = new \Cake\Http\Client();
+                $http = new Client();
                 $apiKey = $this->getConfig('TMDB.api_key');
                 $response = $http->get($this->getConfig('TMDB.url'), [
                     'api_key' => $apiKey,
@@ -146,15 +151,20 @@ class ActorsController extends AppController
                 } else {
                     $this->response = $this->response->withStatus(404);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results.'));
             }
         }
         $this->set(compact('searchResults', 'searchTerm'));
     }
 
+    /**
+     * Gets config setting value.
+     *
+     * @return mixed
+     */
     private function getConfig(string $path): mixed
     {
-        return \Cake\Core\Configure::read($path);
+        return Configure::read($path);
     }
 }

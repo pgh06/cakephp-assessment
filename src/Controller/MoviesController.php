@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Table\MoviesTable;
 use Cake\Http\Response;
-
 
 /**
  * @property \App\Model\Table\MoviesTable $Movies
