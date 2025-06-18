@@ -46,8 +46,10 @@ class MoviesController extends AppController
             $movie = $this->Movies->patchEntity($movie, $this->request->getData());
             if ($this->Movies->save($movie)) {
                 $this->Flash->success(__('The movie has been saved.'));
+
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
+
             $this->Flash->error(__('The movie could not be saved. Please, try again.'));
         }
 
@@ -69,8 +71,10 @@ class MoviesController extends AppController
             $movie = $this->Movies->patchEntity($movie, $this->request->getData());
             if ($this->Movies->save($movie)) {
                 $this->Flash->success(__('The movie has been saved.'));
+
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
+
             $this->Flash->error(__('The movie could not be saved. Please, try again.'));
         }
 

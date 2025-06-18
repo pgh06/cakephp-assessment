@@ -76,10 +76,10 @@ class ActorsController extends AppController
 
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
-                
+
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
-            
+
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
 
