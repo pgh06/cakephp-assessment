@@ -1,9 +1,7 @@
-FROM php:8.1-apache
+FROM php:8.2-apache
 
-# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libonig-dev \
@@ -13,23 +11,10 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     npm \
-    && docker-php-ext-install \
-        intl \
-        mbstring \
-        zip \
-        pdo \
-        pdo_mysql \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install intl mbstring zip pdo pdo_mysql
 
-# Copy Composer from the Composer image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy project files into the container
-COPY . .
-
-# Optional: set file ownership to Apache user
-RUN chown -R www-data:www-data /var/www/html
+COPY . /var/www/html
