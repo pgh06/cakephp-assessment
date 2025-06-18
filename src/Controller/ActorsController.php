@@ -21,7 +21,7 @@ class ActorsController extends AppController
         return null;
     }
 
-    public function view($id = null): Response|null
+    public function view(?string $id = null): Response|null
     {
         $actor = $this->Actors->get($id, contain: []);
         $this->set(compact('actor'));
@@ -45,7 +45,7 @@ class ActorsController extends AppController
         return null;
     }
 
-    public function edit($id = null): Response|null
+    public function edit(?string $id = null): Response|null
     {
         $actor = $this->Actors->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -61,7 +61,7 @@ class ActorsController extends AppController
         return null;
     }
 
-    public function delete($id = null): Response
+    public function delete(?string $id = null): Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $actor = $this->Actors->get($id);
