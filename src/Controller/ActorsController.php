@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Http\Client;
 use Cake\Core\Configure;
-use Exception;
+use Cake\Http\Client;
 use Cake\Http\Response;
+use Exception;
 
 /**
  * @property \App\Model\Table\ActorsTable $Actors
