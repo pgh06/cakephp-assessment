@@ -84,7 +84,6 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
-        $this->response = $this->response->withType('json');
 
         return $this->render();
     }
@@ -104,7 +103,6 @@ class ActorsController extends AppController
         } else {
             $this->Flash->error(__('The actor could not be deleted. Please, try again.'));
         }
-        $this->response = $this->response->withType('json');
 
         return $this->render();
     }
