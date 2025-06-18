@@ -4,14 +4,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Http\Response;
-use App\Model\Table\ActorsTable;
 
 /**
  * Controller for managing Actors.
  *
  * Provides actions to list, view, add, edit, delete, and search actors.
  *
- * @property ActorsTable $Actors The Actors table instance
  */
 class ActorsController extends AppController
 {
@@ -51,13 +49,12 @@ class ActorsController extends AppController
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
-
         $this->set(compact('actor'));
-        return $this->getResponse();
+        return $this->render();
     }
 
     /**
@@ -73,13 +70,13 @@ class ActorsController extends AppController
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
-
         $this->set(compact('actor'));
-        return $this->getResponse();
+        $this->response = $this->response->withType('json');
+        return $this->render();
     }
 
     /**
@@ -97,8 +94,8 @@ class ActorsController extends AppController
         } else {
             $this->Flash->error(__('The actor could not be deleted. Please, try again.'));
         }
-
-        return $this->redirect(['action' => 'index']);
+        $this->response = $this->response->withType('json');
+        return $this->render();
     }
 
     /**
@@ -116,7 +113,6 @@ class ActorsController extends AppController
                 return $exp->like('Actors.name', '%' . $searchTerm . '%');
             });
         }
-
         $actors = $this->paginate($query);
         $this->set(compact('actors'));
     }
@@ -152,7 +148,6 @@ class ActorsController extends AppController
                 $this->Flash->error(__('Unable to fetch search results.'));
             }
         }
-
         $this->set(compact('searchResults', 'searchTerm'));
     }
 
