@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Http\Response;
 use Exception;
+use App\Service\TmdbService;
 
 /**
  * @property \App\Model\Table\ActorsTable $Actors
@@ -138,22 +139,13 @@ class ActorsController extends AppController
 
         if (!empty($searchTerm)) {
             try {
-                $http = new Client();
-                $apiKey = $this->getConfig('TMDB.api_key');
-                $response = $http->get($this->getConfig('TMDB.url'), [
-                    'api_key' => $apiKey,
-                    'query' => $searchTerm,
-                    'language' => 'en-US',
-                    'include_adult' => 'false',
-                ]);
-
-                if ($response->isOk()) {
-                    $data = $response->getJson();
-                    $searchResults = $data['results'] ?? [];
-                } else {
-                    $this->response = $this->response->withStatus(404);
-                }
-            } catch (Exception $e) {
+                $service = new TmdbService();
+                $searchResults = $service->searchPerson(
+                    $searchTerm,
+                    $this->getConfig('TMDB.url'),
+                    $this->getConfig('TMDB.api_key')
+                );
+            } catch (\Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results.'));
             }
         }
