@@ -9,6 +9,8 @@ use Cake\Http\Response;
  * Controller for managing Actors.
  *
  * Provides actions to list, view, add, edit, delete, and search actors.
+ * 
+ * @property ActorsTable $Actors The Actors table instance
  *
  */
 class ActorsController extends AppController
