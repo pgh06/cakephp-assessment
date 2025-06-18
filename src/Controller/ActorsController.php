@@ -37,7 +37,7 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
-        return $this->response;
+        return $this->getResponse();
     }
 
     public function edit(string $id): Response
@@ -53,7 +53,7 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
-        return $this->response;
+        return $this->getResponse();
     }
 
     public function delete(string $id): Response
