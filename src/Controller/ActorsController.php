@@ -100,4 +100,64 @@ class ActorsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Gets actor's movie records.
+     *
+     * @return void
+     */
+    public function movies(): void
+    {
+        $searchTerm = trim((string)$this->request->getQuery('name'));
+        $query = $this->Actors->find()->contain(['Movies']);
+
+        if ($searchTerm) {
+            $query = $query->where(function ($exp) use ($searchTerm) {
+                return $exp->like('Actors.name', '%' . $searchTerm . '%');
+            });
+        }
+
+        $actors = $this->paginate($query);
+        $this->set(compact('actors'));
+    }
+
+    /**
+     * Searches TMDB database for actors.
+     *
+     * @return void
+     */
+    public function search(): void
+    {
+        $searchTerm = trim((string)$this->request->getQuery('q'));
+        $searchResults = [];
+
+        if (!empty($searchTerm)) {
+            try {
+                $http = new \Cake\Http\Client();
+                $apiKey = $this->getConfig('TMDB.api_key');
+                $response = $http->get($this->getConfig('TMDB.url'), [
+                    'api_key' => $apiKey,
+                    'query' => $searchTerm,
+                    'language' => 'en-US',
+                    'include_adult' => 'false',
+                ]);
+
+                if ($response->isOk()) {
+                    $data = $response->getJson();
+                    $searchResults = $data['results'] ?? [];
+                } else {
+                    $this->response = $this->response->withStatus(404);
+                }
+            } catch (\Exception $e) {
+                $this->Flash->error(__('Unable to fetch search results.'));
+            }
+        }
+
+        $this->set(compact('searchResults', 'searchTerm'));
+    }
+
+    private function getConfig(string $path): mixed
+    {
+        return \Cake\Core\Configure::read($path);
+    }
 }
