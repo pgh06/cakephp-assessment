@@ -3,88 +3,65 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Http\Response;
+use Fig\Http\Message\StatusCodeInterface;
+use App\Model\Table\ActorsTable;
+
 /**
- * Actors Controller
- *
+ * @property ActorsTable $Actors
  */
 class ActorsController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
+    public function index(): Response|null
     {
         $query = $this->Actors->find();
         $actors = $this->paginate($query);
-
         $this->set(compact('actors'));
+
+        return null;
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Actor id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
+    public function view($id = null): Response|null
     {
         $actor = $this->Actors->get($id, contain: []);
         $this->set(compact('actor'));
+
+        return null;
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
+    public function add(): Response|null
     {
         $actor = $this->Actors->newEmptyEntity();
         if ($this->request->is('post')) {
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
+
         $this->set(compact('actor'));
+        return null;
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Actor id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
+    public function edit($id = null): Response|null
     {
         $actor = $this->Actors->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $actor = $this->Actors->patchEntity($actor, $this->request->getData());
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         }
+
         $this->set(compact('actor'));
+        return null;
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Actor id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
+    public function delete($id = null): Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $actor = $this->Actors->get($id);
@@ -97,10 +74,9 @@ class ActorsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function movies()
+    public function movies(): Response|null
     {
         $searchTerm = trim((string)$this->request->getQuery('name'));
-
         $query = $this->Actors->find()->contain(['Movies']);
 
         if ($searchTerm) {
@@ -111,12 +87,11 @@ class ActorsController extends AppController
 
         $actors = $this->paginate($query);
         $this->set(compact('actors'));
+
+        return null;
     }
 
-    /**
-     * Search method
-     */
-    public function search()
+    public function search(): Response|null
     {
         $searchTerm = trim((string)$this->request->getQuery('q'));
         $searchResults = [];
@@ -124,7 +99,6 @@ class ActorsController extends AppController
         if (!empty($searchTerm)) {
             try {
                 $http = new \Cake\Http\Client();
-
                 $apiKey = $this->getConfig('TMDB.api_key');
                 $response = $http->get($this->getConfig('TMDB.url'), [
                     'api_key' => $apiKey,
@@ -137,7 +111,7 @@ class ActorsController extends AppController
                     $data = $response->getJson();
                     $searchResults = $data['results'] ?? [];
                 } else {
-                    // get error message
+                    $this->response = $this->response->withStatus(404);
                 }
             } catch (\Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results at the moment.'));
@@ -145,9 +119,10 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('searchResults', 'searchTerm'));
+        return null;
     }
 
-    private function getConfig(string $path)
+    private function getConfig(string $path): mixed
     {
         return \Cake\Core\Configure::read($path);
     }
