@@ -14,6 +14,14 @@ class TmdbService
         $this->http = $http ?? new Client();
     }
 
+    /**
+     * Search persons via TMDB API.
+     *
+     * @param string $term Search term
+     * @param string $url API URL
+     * @param string $apiKey API key
+     * @return array<array<string, mixed>> List of search results as arrays
+     */
     public function searchPerson(string $term, string $url, string $apiKey): array
     {
         $response = $this->http->get($url, [
