@@ -64,13 +64,14 @@ require CAKE . 'functions.php';
  * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
  * for more information for recommended practices.
 */
-// if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-//     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-//     $dotenv->parse()
-//         ->putenv()
-//         ->toEnv()
-//         ->toServer();
-// }
+if (file_exists(CONFIG . '.env')) {
+    $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+    $dotenv->parse()
+        ->skipExisting()
+        ->putenv()
+        ->toEnv()
+        ->toServer();
+}
 
 /*
  * Initializes default Config store and loads the main configuration file (app.php)
@@ -201,6 +202,13 @@ ServerRequest::addDetector('tablet', function ($request) {
 
     return $detector->isTablet();
 });
+
+// Set TMDB API configuration
+$tmdbApiKey = env('TMDB_API_KEY');
+if ($tmdbApiKey) {
+    Configure::write('TMDB.api_key', $tmdbApiKey);
+    Configure::write('TMDB.url', 'https://api.themoviedb.org/3/search/person');
+}
 
 /*
  * You can enable default locale format parsing by adding calls
