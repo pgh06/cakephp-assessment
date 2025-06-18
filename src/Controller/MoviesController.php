@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Http\Response;
 use App\Model\Table\MoviesTable;
+use Cake\Http\Response;
 
 /**
  * Controller for managing Movies.
