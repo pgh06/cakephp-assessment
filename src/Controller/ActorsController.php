@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\TmdbService;
 use Cake\Core\Configure;
-use Cake\Http\Client;
 use Cake\Http\Response;
 use Exception;
-use App\Service\TmdbService;
 
 /**
  * @property \App\Model\Table\ActorsTable $Actors
@@ -143,9 +142,9 @@ class ActorsController extends AppController
                 $searchResults = $service->searchPerson(
                     $searchTerm,
                     $this->getConfig('TMDB.url'),
-                    $this->getConfig('TMDB.api_key')
+                    $this->getConfig('TMDB.api_key'),
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results.'));
             }
         }

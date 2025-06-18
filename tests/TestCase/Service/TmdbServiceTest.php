@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Service;
 
+use App\Service\TmdbService;
 use Cake\Http\Client;
 use Cake\Http\Client\Response;
 use Cake\TestSuite\TestCase;
-use App\Service\TmdbService;
 
 class TmdbServiceTest extends TestCase
 {

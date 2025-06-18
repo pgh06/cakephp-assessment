@@ -9,6 +9,11 @@ class TmdbService
 {
     protected Client $http;
 
+    /**
+     * Constructor.
+     *
+     * @param \Cake\Http\Client|null $http Optional HTTP client instance. If none provided, a new Client will be created.
+     */
     public function __construct(?Client $http = null)
     {
         $this->http = $http ?? new Client();
@@ -33,6 +38,7 @@ class TmdbService
 
         if ($response->isOk()) {
             $data = $response->getJson();
+            
             return $data['results'] ?? [];
         }
 
