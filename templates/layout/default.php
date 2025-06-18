@@ -35,13 +35,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
-        </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
+    <ul style="list-style: none; display: flex; gap: 1em; margin: 0; padding: 0;">
+        <li><?= $this->Html->link('Home', '/') ?></li>
+        <li><?= $this->Html->link('Actors Index', ['controller' => 'Actors', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link('Search Actors', ['controller' => 'Actors', 'action' => 'search']) ?></li>
+        <li><?= $this->Html->link('Actors Movies', ['controller' => 'Actors', 'action' => 'movies']) ?></li>
+        <li><?= $this->Html->link('Movies Index', ['controller' => 'Movies', 'action' => 'index']) ?></li>
+    </ul>
     </nav>
     <main class="main">
         <div class="container">
