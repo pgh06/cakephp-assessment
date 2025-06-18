@@ -38,7 +38,7 @@ class TmdbService
 
         if ($response->isOk()) {
             $data = $response->getJson();
-            
+
             return $data['results'] ?? [];
         }
 
