@@ -21,7 +21,7 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('title') ?></th>
+                    <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('date_of_birth') ?></th>
                     <th><?= __('Movies') ?></th>
                 </tr>
