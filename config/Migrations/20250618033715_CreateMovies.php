@@ -20,7 +20,7 @@ class CreateMovies extends BaseMigration
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('release_year', 'year', [
+        $table->addColumn('release_date', 'date', [
             'default' => null,
             'null' => false,
         ]);

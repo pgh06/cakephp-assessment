@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\BaseSeed;
@@ -21,42 +22,41 @@ class MoviesSeed extends BaseSeed
     public function run(): void
     {
         $data = [
-            // 10 actors * 3 movies each = 30 movies total, but let's create unique movie names
-            ['name' => 'Men in Black', 'release_year' => 1997],
-            ['name' => 'Independence Day', 'release_year' => 1996],
-            ['name' => 'Ali', 'release_year' => 2001],
+            ['name' => 'Men in Black', 'release_date' => '1997-07-02'],
+            ['name' => 'Independence Day', 'release_date' => '1996-07-03'],
+            ['name' => 'Ali', 'release_date' => '2001-12-25'],
 
-            ['name' => 'Forrest Gump', 'release_year' => 1994],
-            ['name' => 'Cast Away', 'release_year' => 2000],
-            ['name' => 'Saving Private Ryan', 'release_year' => 1998],
+            ['name' => 'Forrest Gump', 'release_date' => '1994-07-06'],
+            ['name' => 'Cast Away', 'release_date' => '2000-12-22'],
+            ['name' => 'Saving Private Ryan', 'release_date' => '1998-07-24'],
 
-            ['name' => 'Captain America: The First Avenger', 'release_year' => 2011],
-            ['name' => 'Snowpiercer', 'release_year' => 2013],
-            ['name' => 'Gifted', 'release_year' => 2017],
+            ['name' => 'Captain America: The First Avenger', 'release_date' => '2011-07-22'],
+            ['name' => 'Snowpiercer', 'release_date' => '2013-08-01'],
+            ['name' => 'Gifted', 'release_date' => '2017-04-07'],
 
-            ['name' => 'Top Gun', 'release_year' => 1986],
-            ['name' => 'Mission: Impossible', 'release_year' => 1996],
-            ['name' => 'Jerry Maguire', 'release_year' => 1996],
+            ['name' => 'Top Gun', 'release_date' => '1986-05-16'],
+            ['name' => 'Mission: Impossible', 'release_date' => '1996-05-22'],
+            ['name' => 'Jerry Maguire', 'release_date' => '1996-12-13'],
 
-            ['name' => 'The Avengers', 'release_year' => 2012],
-            ['name' => 'Shutter Island', 'release_year' => 2010],
-            ['name' => 'Spotlight', 'release_year' => 2015],
+            ['name' => 'The Avengers', 'release_date' => '2012-05-04'],
+            ['name' => 'Shutter Island', 'release_date' => '2010-02-19'],
+            ['name' => 'Spotlight', 'release_date' => '2015-11-06'],
 
-            ['name' => 'Lost in Translation', 'release_year' => 2003],
-            ['name' => 'Black Swan', 'release_year' => 2010],
-            ['name' => 'Thor', 'release_year' => 2011],
+            ['name' => 'Lost in Translation', 'release_date' => '2003-09-12'],
+            ['name' => 'Black Swan', 'release_date' => '2010-12-17'],
+            ['name' => 'Thor', 'release_date' => '2011-05-06'],
 
-            ['name' => 'Iron Man', 'release_year' => 2008],
-            ['name' => 'Sherlock Holmes', 'release_year' => 2009],
-            ['name' => 'Avengers: Endgame', 'release_year' => 2019],
+            ['name' => 'Iron Man', 'release_date' => '2008-05-02'],
+            ['name' => 'Sherlock Holmes', 'release_date' => '2009-12-25'],
+            ['name' => 'Avengers: Endgame', 'release_date' => '2019-04-26'],
 
-            ['name' => 'The Hunger Games', 'release_year' => 2012],
-            ['name' => 'Silver Linings Playbook', 'release_year' => 2012],
-            ['name' => 'X-Men: First Class', 'release_year' => 2011],
+            ['name' => 'The Hunger Games', 'release_date' => '2012-03-23'],
+            ['name' => 'Silver Linings Playbook', 'release_date' => '2012-11-16'],
+            ['name' => 'X-Men: First Class', 'release_date' => '2011-06-03'],
 
-            ['name' => 'Inception', 'release_year' => 2010],
-            ['name' => 'The Revenant', 'release_year' => 2015],
-            ['name' => 'Titanic', 'release_year' => 1997],
+            ['name' => 'Inception', 'release_date' => '2010-07-16'],
+            ['name' => 'The Revenant', 'release_date' => '2015-12-25'],
+            ['name' => 'Titanic', 'release_date' => '1997-12-19'],
         ];
 
         $table = $this->table('movies');
