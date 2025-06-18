@@ -21,7 +21,7 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('name') ?></th>
+                    <th><?= $this->Paginator->sort('title') ?></th>
                     <th><?= $this->Paginator->sort('date_of_birth') ?></th>
                     <th><?= __('Movies') ?></th>
                 </tr>
@@ -35,7 +35,7 @@
                         <?php if (!empty($actor->movies)): ?>
                             <ul>
                                 <?php foreach ($actor->movies as $movie): ?>
-                                    <li><?= h($movie->title) ?></li>
+                                    <li><?= h($movie->name) ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
