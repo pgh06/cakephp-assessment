@@ -50,7 +50,9 @@ class MoviesController extends AppController
             }
             $this->Flash->error(__('The movie could not be saved. Please, try again.'));
         }
+
         $this->set(compact('movie'));
+
         return $this->render();
     }
 
@@ -71,7 +73,9 @@ class MoviesController extends AppController
             }
             $this->Flash->error(__('The movie could not be saved. Please, try again.'));
         }
+
         $this->set(compact('movie'));
+
         return $this->render();
     }
 
@@ -85,11 +89,13 @@ class MoviesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $movie = $this->Movies->get($id);
+
         if ($this->Movies->delete($movie)) {
             $this->Flash->success(__('The movie has been deleted.'));
         } else {
             $this->Flash->error(__('The movie could not be deleted. Please, try again.'));
         }
+
         return $this->render();
     }
 }

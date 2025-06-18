@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Http\Client;
+use Cake\Core\Configure;
+use Exception;
 use Cake\Http\Response;
-use \Cake\Http\Client;
-use \Cake\Core\Configure;
-use \Exception;
+
 /**
  * @property \App\Model\Table\ActorsTable $Actors
  * @property \App\Model\Table\MoviesTable $Movies
@@ -56,6 +57,7 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
+
         return $this->render();
     }
 
@@ -74,6 +76,7 @@ class ActorsController extends AppController
 
             if ($this->Actors->save($actor)) {
                 $this->Flash->success(__('The actor has been saved.'));
+                
                 return $this->redirect(['action' => 'index']) ?? $this->getResponse();
             }
             
@@ -102,6 +105,7 @@ class ActorsController extends AppController
             $this->Flash->error(__('The actor could not be deleted. Please, try again.'));
         }
         $this->response = $this->response->withType('json');
+
         return $this->render();
     }
 
@@ -155,6 +159,7 @@ class ActorsController extends AppController
                 $this->Flash->error(__('Unable to fetch search results.'));
             }
         }
+
         $this->set(compact('searchResults', 'searchTerm'));
     }
 
