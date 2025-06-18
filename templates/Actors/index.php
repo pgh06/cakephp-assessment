@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\Cake\Datasource\EntityInterface> $actors
+ * @var iterable<\App\Model\Entity\Actor> $actors
  */
 ?>
 <div class="actors index content">

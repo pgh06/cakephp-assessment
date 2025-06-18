@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\Cake\Datasource\EntityInterface> $movies
+ * @var iterable<\App\Model\Entity\Movie> $movies
  */
 ?>
 <div class="movies index content">

@@ -37,9 +37,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <nav class="top-nav">
     <ul style="list-style: none; display: flex; gap: 1em; margin: 0; padding: 0;">
         <li><?= $this->Html->link('Home', '/') ?></li>
-        <li><?= $this->Html->link('Actors', ['controller' => 'Actors', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link('Actors Index', ['controller' => 'Actors', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link('Search TMDB Actors', ['controller' => 'Actors', 'action' => 'search']) ?></li>
-        <li><?= $this->Html->link('Movies', ['controller' => 'Actors', 'action' => 'movies']) ?></li>
+        <li><?= $this->Html->link('Actors Movies', ['controller' => 'Actors', 'action' => 'movies']) ?></li>
+        <li><?= $this->Html->link('Movies Index', ['controller' => 'Movies', 'action' => 'index']) ?></li>
     </ul>
     </nav>
     <main class="main">

@@ -62,7 +62,9 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
-        $builder->connect('/movies', ['controller' => 'Actors', 'action' => 'movies']);
+        $builder->connect('/movies', ['controller' => 'Movies', 'action' => 'index']);
+
+        $builder->connect('/actors/movies', ['controller' => 'Actors', 'action' => 'movies']);
 
         $builder->connect('/search', ['controller' => 'Actors', 'action' => 'search']);
         
