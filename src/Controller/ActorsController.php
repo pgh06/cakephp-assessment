@@ -7,10 +7,19 @@ use Cake\Http\Response;
 use App\Model\Table\ActorsTable;
 
 /**
- * @property ActorsTable $Actors
+ * Controller for managing Actors.
+ *
+ * Provides actions to list, view, add, edit, delete, and search actors.
+ *
+ * @property ActorsTable $Actors The Actors table instance
  */
 class ActorsController extends AppController
 {
+    /**
+     * List all actors with pagination.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $query = $this->Actors->find();
@@ -18,12 +27,23 @@ class ActorsController extends AppController
         $this->set(compact('actors'));
     }
 
+    /**
+     * View details of a specific actor by id.
+     *
+     * @param string $id Actor id
+     * @return void
+     */
     public function view(string $id): void
     {
         $actor = $this->Actors->get($id, contain: []);
         $this->set(compact('actor'));
     }
 
+    /**
+     * Add a new actor record.
+     *
+     * @return \Cake\Http\Response Redirects on successful add, renders view otherwise
+     */
     public function add(): Response
     {
         $actor = $this->Actors->newEmptyEntity();
@@ -40,6 +60,12 @@ class ActorsController extends AppController
         return $this->getResponse();
     }
 
+    /**
+     * Edit an existing actor record.
+     *
+     * @param string $id Actor id
+     * @return \Cake\Http\Response Redirects on successful edit, renders view otherwise
+     */
     public function edit(string $id): Response
     {
         $actor = $this->Actors->get($id, contain: []);
@@ -56,6 +82,12 @@ class ActorsController extends AppController
         return $this->getResponse();
     }
 
+    /**
+     * Delete an actor record.
+     *
+     * @param string $id Actor id
+     * @return \Cake\Http\Response Redirects to index after delete attempt
+     */
     public function delete(string $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
@@ -67,55 +99,5 @@ class ActorsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function movies(): void
-    {
-        $searchTerm = trim((string)$this->request->getQuery('name'));
-        $query = $this->Actors->find()->contain(['Movies']);
-
-        if ($searchTerm) {
-            $query = $query->where(function ($exp) use ($searchTerm) {
-                return $exp->like('Actors.name', '%' . $searchTerm . '%');
-            });
-        }
-
-        $actors = $this->paginate($query);
-        $this->set(compact('actors'));
-    }
-
-    public function search(): void
-    {
-        $searchTerm = trim((string)$this->request->getQuery('q'));
-        $searchResults = [];
-
-        if (!empty($searchTerm)) {
-            try {
-                $http = new \Cake\Http\Client();
-                $apiKey = $this->getConfig('TMDB.api_key');
-                $response = $http->get($this->getConfig('TMDB.url'), [
-                    'api_key' => $apiKey,
-                    'query' => $searchTerm,
-                    'language' => 'en-US',
-                    'include_adult' => 'false',
-                ]);
-
-                if ($response->isOk()) {
-                    $data = $response->getJson();
-                    $searchResults = $data['results'] ?? [];
-                } else {
-                    $this->response = $this->response->withStatus(404);
-                }
-            } catch (\Exception $e) {
-                $this->Flash->error(__('Unable to fetch search results at the moment.'));
-            }
-        }
-
-        $this->set(compact('searchResults', 'searchTerm'));
-    }
-
-    private function getConfig(string $path): mixed
-    {
-        return \Cake\Core\Configure::read($path);
     }
 }

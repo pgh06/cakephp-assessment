@@ -7,11 +7,19 @@ use Cake\Http\Response;
 use App\Model\Table\MoviesTable;
 
 /**
- * @property MoviesTable $Movies
+ * Controller for managing Movies.
+ *
+ * Provides actions to list, view, add, edit, and delete movie records.
+ *
+ * @property MoviesTable $Movies The Movies table instance
  */
 class MoviesController extends AppController
 {
-    // Only renders a view, never redirects: return void
+    /**
+     * List all movies with pagination.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $query = $this->Movies->find();
@@ -19,14 +27,23 @@ class MoviesController extends AppController
         $this->set(compact('movies'));
     }
 
-    // Only renders a view, never redirects: return void
+    /**
+     * View details of a specific movie by id.
+     *
+     * @param string $id Movie id
+     * @return void
+     */
     public function view(string $id): void
     {
         $movie = $this->Movies->get($id, contain: []);
         $this->set(compact('movie'));
     }
 
-    // May redirect, so return Response and always return a Response object
+    /**
+     * Add a new movie record.
+     *
+     * @return \Cake\Http\Response Redirects on successful add, renders view otherwise
+     */
     public function add(): Response
     {
         $movie = $this->Movies->newEmptyEntity();
@@ -43,7 +60,12 @@ class MoviesController extends AppController
         return $this->getResponse();
     }
 
-    // May redirect, so return Response and always return a Response object
+    /**
+     * Edit an existing movie record.
+     *
+     * @param string $id Movie id
+     * @return \Cake\Http\Response Redirects on successful edit, renders view otherwise
+     */
     public function edit(string $id): Response
     {
         $movie = $this->Movies->get($id, contain: []);
@@ -60,7 +82,12 @@ class MoviesController extends AppController
         return $this->getResponse();
     }
 
-    // May redirect, so return Response and always return a Response object
+    /**
+     * Delete a movie record.
+     *
+     * @param string $id Movie id
+     * @return \Cake\Http\Response Redirects to index after delete attempt
+     */
     public function delete(string $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
