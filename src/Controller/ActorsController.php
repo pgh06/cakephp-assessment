@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Http\Response;
-use Fig\Http\Message\StatusCodeInterface;
 use App\Model\Table\ActorsTable;
 
 /**
@@ -12,22 +11,20 @@ use App\Model\Table\ActorsTable;
  */
 class ActorsController extends AppController
 {
-    public function index(): Response|null
+    public function index(): void
     {
         $query = $this->Actors->find();
         $actors = $this->paginate($query);
         $this->set(compact('actors'));
-
-        return null;
     }
 
-    public function view(?string $id = null): void
+    public function view(string $id): void
     {
         $actor = $this->Actors->get($id, contain: []);
         $this->set(compact('actor'));
     }
 
-    public function add(): Response|null
+    public function add(): Response
     {
         $actor = $this->Actors->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -40,10 +37,10 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
-        return null;
+        return $this->response;
     }
 
-    public function edit(?string $id = null): Response|null
+    public function edit(string $id): Response
     {
         $actor = $this->Actors->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -56,10 +53,10 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('actor'));
-        return null;
+        return $this->response;
     }
 
-    public function delete(?string $id = null): Response
+    public function delete(string $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $actor = $this->Actors->get($id);
@@ -72,7 +69,7 @@ class ActorsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function movies(): Response|null
+    public function movies(): void
     {
         $searchTerm = trim((string)$this->request->getQuery('name'));
         $query = $this->Actors->find()->contain(['Movies']);
@@ -85,11 +82,9 @@ class ActorsController extends AppController
 
         $actors = $this->paginate($query);
         $this->set(compact('actors'));
-
-        return null;
     }
 
-    public function search(): Response|null
+    public function search(): void
     {
         $searchTerm = trim((string)$this->request->getQuery('q'));
         $searchResults = [];
@@ -117,7 +112,6 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('searchResults', 'searchTerm'));
-        return null;
     }
 
     private function getConfig(string $path): mixed
