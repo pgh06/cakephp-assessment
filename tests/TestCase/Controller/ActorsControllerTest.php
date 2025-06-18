@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
@@ -35,7 +36,7 @@ class ActorsControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -46,7 +47,7 @@ class ActorsControllerTest extends TestCase
      */
     public function testView(): void
     {
-        
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -57,7 +58,7 @@ class ActorsControllerTest extends TestCase
      */
     public function testAdd(): void
     {
-        
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -68,7 +69,7 @@ class ActorsControllerTest extends TestCase
      */
     public function testEdit(): void
     {
-        
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -79,6 +80,6 @@ class ActorsControllerTest extends TestCase
      */
     public function testDelete(): void
     {
-        
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

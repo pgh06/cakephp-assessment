@@ -322,16 +322,18 @@ return [
          * The test connection is used during the test suite.
          */
         'test' => [
-            'className' => Connection::class,
-            'driver' => Mysql::class,
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
             'persistent' => false,
-            'timezone' => 'UTC',
+            'host' => 'mysql',
+            'username' => 'appuser',
+            'password' => 'secret',
+            'database' => 'cake_assessment_test',
             'encoding' => 'utf8mb4',
+            'timezone' => 'UTC',
             'flags' => [],
             'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
             'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
     ],
 

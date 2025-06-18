@@ -22,6 +22,8 @@ class ActorsFixture extends TestFixture
                 'id' => 1,
                 'name' => 'Lorem ipsum dolor sit amet',
                 'date_of_birth' => '2025-06-18',
+                'created' => '2025-06-18 11:54:04',
+                'modified' => '2025-06-18 11:54:04',
             ],
         ];
         parent::init();

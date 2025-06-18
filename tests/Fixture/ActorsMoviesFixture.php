@@ -7,13 +7,17 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class ActorsMoviesFixture extends TestFixture
 {
-    public $import = ['table' => 'actors_movies'];
+    public $import = ['table' => 'actors_movies']; // optionally import schema
 
     public function init(): void
     {
         $this->records = [
-            ['actor_id' => 1, 'movie_id' => 1],
-            // add more sample records as needed for your tests...
+            [
+                'actor_id' => 1,
+                'movie_id' => 1,
+                'created' => '2025-06-18 12:00:00',
+                'modified' => '2025-06-18 12:00:00',
+            ],
         ];
         parent::init();
     }

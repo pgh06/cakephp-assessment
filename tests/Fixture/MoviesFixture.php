@@ -22,6 +22,8 @@ class MoviesFixture extends TestFixture
                 'id' => 1,
                 'name' => 'Lorem ipsum dolor sit amet',
                 'release_date' => '2025-06-18',
+                'created' => '2025-06-18 11:54:35',
+                'modified' => '2025-06-18 11:54:35',
             ],
         ];
         parent::init();
