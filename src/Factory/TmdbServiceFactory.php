@@ -11,7 +11,7 @@ class TmdbServiceFactory
     /**
      * Initialize tmdb service and client
      *
-     * @return TmdbService
+     * @return \App\Service\TmdbService
      */
     public static function create(): TmdbService
     {

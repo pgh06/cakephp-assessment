@@ -16,8 +16,8 @@ declare(strict_types=1);
  */
 namespace App;
 
-use App\Service\TmdbService;
 use App\Factory\TmdbServiceFactory;
+use App\Service\TmdbService;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
