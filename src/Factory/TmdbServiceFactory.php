@@ -8,9 +8,13 @@ use Cake\Http\Client;
 
 class TmdbServiceFactory
 {
+    /**
+     * Initialize tmdb service and client
+     *
+     * @return TmdbService
+     */
     public static function create(): TmdbService
     {
-        $client = new Client();
-        return new TmdbService($client);
+        return new TmdbService(new Client());
     }
 }

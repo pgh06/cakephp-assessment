@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App;
 
+use App\Service\TmdbService;
 use App\Factory\TmdbServiceFactory;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
@@ -106,7 +107,7 @@ class Application extends BaseApplication
     {
         parent::services($container);
 
-        $container->add(\App\Service\TmdbService::class, function () {
+        $container->add(TmdbService::class, function () {
             return TmdbServiceFactory::create();
         });
     }

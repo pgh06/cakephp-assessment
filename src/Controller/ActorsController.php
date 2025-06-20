@@ -17,6 +17,11 @@ class ActorsController extends AppController
 {
     private TmdbService $tmdbService;
 
+    /**
+     * Initialize tmdb service via factory
+     *
+     * @return void
+     */
     public function initialize(): void
     {
         parent::initialize();
@@ -150,7 +155,7 @@ class ActorsController extends AppController
                 $searchResults = $this->tmdbService->searchPerson(
                     $searchTerm,
                     Configure::read('TMDB.url'),
-                    Configure::read('TMDB.api_key')
+                    Configure::read('TMDB.api_key'),
                 );
             } catch (Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results.'));
