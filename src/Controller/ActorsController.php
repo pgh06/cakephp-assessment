@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Factory\TmdbServiceFactory;
 use App\Service\TmdbService;
 use Cake\Core\Configure;
 use Cake\Http\Response;
@@ -14,6 +15,14 @@ use Exception;
  */
 class ActorsController extends AppController
 {
+    private TmdbService $tmdbService;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->tmdbService = TmdbServiceFactory::create();
+    }
+
     /**
      * List all actors with pagination.
      *
@@ -138,11 +147,10 @@ class ActorsController extends AppController
 
         if (!empty($searchTerm)) {
             try {
-                $service = new TmdbService();
-                $searchResults = $service->searchPerson(
+                $searchResults = $this->tmdbService->searchPerson(
                     $searchTerm,
-                    $this->getConfig('TMDB.url'),
-                    $this->getConfig('TMDB.api_key'),
+                    Configure::read('TMDB.url'),
+                    Configure::read('TMDB.api_key')
                 );
             } catch (Exception $e) {
                 $this->Flash->error(__('Unable to fetch search results.'));
@@ -150,15 +158,5 @@ class ActorsController extends AppController
         }
 
         $this->set(compact('searchResults', 'searchTerm'));
-    }
-
-    /**
-     * Gets config setting value.
-     *
-     * @return mixed
-     */
-    private function getConfig(string $path): mixed
-    {
-        return Configure::read($path);
     }
 }
