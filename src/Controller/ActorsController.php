@@ -85,10 +85,10 @@ class ActorsController extends AppController
      * Loads the actor by ID, patches with form data unconditionally,
      * attempts to save changes, and handles success/error feedback.
      *
-     * @param string $id Actor ID.
+     * @param int $id Actor ID.
      * @return \Cake\Http\Response
      */
-    public function edit(string $id): Response
+    public function edit(int $id): Response
     {
         $actor = $this->Actors->get($id, contain: []);
 
@@ -112,10 +112,10 @@ class ActorsController extends AppController
      * Only accepts POST or DELETE requests.
      * Attempts to delete the actor and redirects with flash message.
      *
-     * @param string $id Actor ID.
+     * @param int $id Actor ID.
      * @return \Cake\Http\Response
      */
-    public function delete(string $id): Response
+    public function delete(int $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
