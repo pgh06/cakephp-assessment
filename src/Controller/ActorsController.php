@@ -10,15 +10,16 @@ use Cake\Http\Response;
 use Exception;
 
 /**
+ * Controller for managing Actors.
+ *
  * @property \App\Model\Table\ActorsTable $Actors
- * @property \App\Model\Table\MoviesTable $Movies
  */
 class ActorsController extends AppController
 {
     private TmdbService $tmdbService;
 
     /**
-     * Initialize tmdb service via factory
+     * Initialize TMDB service via factory.
      *
      * @return void
      */
@@ -41,9 +42,9 @@ class ActorsController extends AppController
     }
 
     /**
-     * View details of a specific actor by id.
+     * View details of a specific actor by ID.
      *
-     * @param string $id Actor id
+     * @param string $id Actor ID.
      * @return void
      */
     public function view(string $id): void
@@ -55,21 +56,24 @@ class ActorsController extends AppController
     /**
      * Add a new actor record.
      *
-     * @return \Cake\Http\Response Redirects on successful add, renders view otherwise
+     * Processes form data unconditionally, attempts to save a new actor,
+     * sets success or error flash messages, and redirects accordingly.
+     *
+     * @return \Cake\Http\Response
      */
     public function add(): Response
     {
         $actor = $this->Actors->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $actor = $this->Actors->patchEntity($actor, $this->request->getData());
-            if ($this->Actors->save($actor)) {
-                $this->Flash->success(__('The actor has been saved.'));
 
-                return $this->redirect(['action' => 'index']) ?? $this->getResponse();
-            }
-            $this->Flash->error(__('The actor could not be saved. Please, try again.'));
+        $actor = $this->Actors->patchEntity($actor, $this->request->getData());
+
+        if ($this->Actors->save($actor)) {
+            $this->Flash->success(__('The actor has been saved.'));
+
+            return $this->redirect(['action' => 'index']);
         }
 
+        $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         $this->set(compact('actor'));
 
         return $this->render();
@@ -78,25 +82,25 @@ class ActorsController extends AppController
     /**
      * Edit an existing actor record.
      *
-     * @param string $id Actor id
-     * @return \Cake\Http\Response Redirects on successful edit, renders view otherwise
+     * Loads the actor by ID, patches with form data unconditionally,
+     * attempts to save changes, and handles success/error feedback.
+     *
+     * @param string $id Actor ID.
+     * @return \Cake\Http\Response
      */
     public function edit(string $id): Response
     {
         $actor = $this->Actors->get($id, contain: []);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $actor = $this->Actors->patchEntity($actor, $this->request->getData());
+        $actor = $this->Actors->patchEntity($actor, $this->request->getData());
 
-            if ($this->Actors->save($actor)) {
-                $this->Flash->success(__('The actor has been saved.'));
+        if ($this->Actors->save($actor)) {
+            $this->Flash->success(__('The actor has been saved.'));
 
-                return $this->redirect(['action' => 'index']) ?? $this->getResponse();
-            }
-
-            $this->Flash->error(__('The actor could not be saved. Please, try again.'));
+            return $this->redirect(['action' => 'index']);
         }
 
+        $this->Flash->error(__('The actor could not be saved. Please, try again.'));
         $this->set(compact('actor'));
 
         return $this->render();
@@ -105,24 +109,31 @@ class ActorsController extends AppController
     /**
      * Delete an actor record.
      *
-     * @param string $id Actor id
-     * @return \Cake\Http\Response Redirects to index after delete attempt
+     * Only accepts POST or DELETE requests.
+     * Attempts to delete the actor and redirects with flash message.
+     *
+     * @param string $id Actor ID.
+     * @return \Cake\Http\Response
      */
     public function delete(string $id): Response
     {
         $this->request->allowMethod(['post', 'delete']);
+
         $actor = $this->Actors->get($id);
+
         if ($this->Actors->delete($actor)) {
             $this->Flash->success(__('The actor has been deleted.'));
         } else {
             $this->Flash->error(__('The actor could not be deleted. Please, try again.'));
         }
 
-        return $this->render();
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
-     * Gets actor's movie records.
+     * List actors with their movies.
+     *
+     * Supports optional 'name' query param for filtering actors by name.
      *
      * @return void
      */
@@ -136,12 +147,15 @@ class ActorsController extends AppController
                 return $exp->like('Actors.name', '%' . $searchTerm . '%');
             });
         }
+
         $actors = $this->paginate($query);
         $this->set(compact('actors'));
     }
 
     /**
-     * Searches TMDB database for actors.
+     * Search TMDB API for actors by name.
+     *
+     * Uses the TMDB service to search persons and sets results for the view.
      *
      * @return void
      */

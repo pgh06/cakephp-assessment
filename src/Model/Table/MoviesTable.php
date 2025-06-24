@@ -5,29 +5,20 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use App\Model\Table\ActorsTable;
 
 /**
  * Movies Model
  *
  * @property \App\Model\Table\ActorsTable&\Cake\ORM\Association\BelongsToMany $Actors
- * @method \App\Model\Entity\Movie newEmptyEntity()
- * @method \App\Model\Entity\Movie newEntity(array $data, array $options = [])
- * @method array<\App\Model\Entity\Movie> newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Movie get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
- * @method \App\Model\Entity\Movie findOrCreate($search, ?callable $callback = null, array $options = [])
- * @method \App\Model\Entity\Movie patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method array<\App\Model\Entity\Movie> patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Movie|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method \App\Model\Entity\Movie saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method iterable<\App\Model\Entity\Movie>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Movie>|false saveMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Movie>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Movie> saveManyOrFail(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Movie>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Movie>|false deleteMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Movie>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Movie> deleteManyOrFail(iterable $entities, array $options = [])
  */
 class MoviesTable extends Table
 {
     /**
-     * Initialize method
+     * Initialization hook method.
+     *
+     * Use this method to define table configuration, behaviors,
+     * associations, and other setup tasks.
      *
      * @param array<string, mixed> $config The configuration for the Table.
      * @return void
@@ -40,7 +31,9 @@ class MoviesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Actors', [
+        $this->addBehavior('Timestamp');
+
+        $this->belongsToMany(ActorsTable::class, [
             'foreignKey' => 'movie_id',
             'targetForeignKey' => 'actor_id',
             'joinTable' => 'actors_movies',
@@ -50,8 +43,12 @@ class MoviesTable extends Table
     /**
      * Default validation rules.
      *
+     * Defines validation rules to apply when saving movie entities.
+     * Checks that the 'name' field is a non-empty string up to 255 characters,
+     * and 'release_date' is a non-empty valid date.
+     *
      * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @return \Cake\Validation\Validator The configured validator.
      */
     public function validationDefault(Validator $validator): Validator
     {
